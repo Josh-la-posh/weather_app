@@ -1,16 +1,22 @@
-# weather_app
+# Flutter Weather App
 
-A weather app that displays  weather forecast, location lookup, temperature, historical weather and historical time series
+A simple weather app built using Flutter that displays current weather information and provides a 5-day forecast. The app integrates with the Weatherstack API to retrieve weather data for a specific city.
+
+## Features
+
+- Display current weather conditions including temperature, weather description, wind speed, and humidity.
+- Toggle between Celsius and Fahrenheit temperature units.
+- View a 5-day weather forecast using maximum temperature.
+- Recent searches are saved for easy access.
+- Customize the UI layout and design.
+- Utilizes Retrofit for making API requests.
+
+## Screenshots
+
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. Clone the repository:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+git clone https://github.com/Josh-la-posh/weather_app.git
