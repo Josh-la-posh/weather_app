@@ -18,5 +18,22 @@ A simple weather app built using Flutter that displays current weather informati
 
 1. Clone the repository:
 
-```bash
-git clone https://github.com/Josh-la-posh/weather_app.git
+- git clone https://github.com/Josh-la-posh/weather_app.git
+
+2. Navigate to the project directory:
+
+- cd weathre_app
+
+3. Run the app:
+
+- flutter run
+
+Dependencies
+
+- retrofit
+- json.annotation
+- shared-preference
+- dio
+- built_value
+
+Weather data provided by Weatherstack

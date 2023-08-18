@@ -72,36 +72,6 @@ class _SearchPageState extends State<SearchPage> {
                     width: double.infinity,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
-                      // child: CustomListTile(
-                      //   onTap: (){},
-                      //   title: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     crossAxisAlignment: CrossAxisAlignment.center,
-                      //     children: [
-                      //       Row(
-                      //         children: [
-                      //           ClockIcon(),
-                      //           SizedBox(width: 15.94,),
-                      //           Text('Surabaya', style: TextStyle(
-                      //               fontSize: 10.247,
-                      //               fontFamily: 'Overpass',
-                      //               fontStyle: FontStyle.normal,
-                      //               fontWeight: FontWeight.w700,
-                      //               color: Color.fromRGBO(68, 78, 114, 1)
-                      //           ),)
-                      //         ],
-                      //       ),
-                      //       Text('34 / 23', style: TextStyle(
-                      //           fontSize: 7.97,
-                      //           fontFamily: 'Overpass',
-                      //           fontStyle: FontStyle.normal,
-                      //           fontWeight: FontWeight.w700,
-                      //           color: Color.fromRGBO(68, 78, 114, 1)
-                      //       ),)
-                      //
-                      //     ],
-                      //   ),
-                      // ),
                       child: CustomListTile(leading: SunIcon(), title: 'Surabaya', color: Color.fromRGBO(68, 78, 114, 1), size: 10.247, subtitle: '32', size2: 7.97,),
                     ),
                   ),
@@ -110,6 +80,11 @@ class _SearchPageState extends State<SearchPage> {
             ),
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: (){},
+        backgroundColor: Colors.white,
+        child: const Icon(Icons.map),
       ),
     );
   }
