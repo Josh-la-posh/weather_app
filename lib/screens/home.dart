@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/assets/icons/svg.dart';
-import 'package:weather_app/provider/weather_provider.dart';
+import 'package:weather_app/provider/current_weather_provider.dart';
+import 'package:weather_app/provider/forecast_provider.dart';
+import 'package:weather_app/screens/forecast.dart';
 import 'package:weather_app/screens/notification.dart';
 import 'package:weather_app/screens/search.dart';
 
@@ -45,11 +47,11 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const SizedBox(height: 41.25,),
-                Consumer<WeatherProvider>(
+                Consumer<CurrentWeatherProvider>(
                     builder: (context, weatherProvider, _) {
                       if (weatherProvider.weatherData != null) {
-                        final location = weatherProvider.weatherData!.location;
-                        final current = weatherProvider.weatherData!.current;
+                        final location = weatherProvider.weatherData?.location;
+                        final current = weatherProvider.weatherData?.current;
                         return Column(
                           children: [
                             Row(
@@ -65,7 +67,7 @@ class HomePage extends StatelessWidget {
                                     children: [
                                       MapWhiteIcon(),
                                       const SizedBox(width: 13.98,),
-                                      Text('${location.name}', style: TextStyle(
+                                      Text('${location?.name}', style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'Overpass',
                                         fontWeight: FontWeight.w700,
@@ -86,12 +88,11 @@ class HomePage extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(height: 46.15,),
-                            CloudHomeIcon(),
-                            Image.network(current.weather_icons[0]),
+                            Image.network(current!.weather_icons[0]),
                             const SizedBox(height: 77.18,),
                             GestureDetector(
                               onTap: (){
-                                // Navigator.push(context, MaterialPageRoute(builder: (context) => const ForecastScreen()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const ForecastScreen()));
                               },
                               child: Container(
                                 width: double.infinity,
@@ -107,14 +108,14 @@ class HomePage extends StatelessWidget {
                                   padding: const EdgeInsets.only(top: 11.89, bottom: 18.18),
                                   child: Column(
                                     children: [
-                                      Text('${location.localtime}', style: const TextStyle(
+                                      Text('${location?.localtime}', style: const TextStyle(
                                           color: Colors.white,
                                           fontFamily: 'Overpass',
                                           fontWeight: FontWeight.w400,
                                           fontStyle: FontStyle.normal,
                                           fontSize: 12.585
                                       ),),
-                                      Text('${current.temperature} °C', style: const TextStyle(
+                                      Text('${current.temperature}°C', style: const TextStyle(
                                           color: Colors.white,
                                           fontFamily: 'Overpass',
                                           fontWeight: FontWeight.w400,
@@ -223,6 +224,16 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Retrieve the WeatherProvider instance
+          final weatherProvider = Provider.of<CurrentWeatherProvider>(context, listen: false);
+
+          // Call fetchWeatherData with the required parameters
+          weatherProvider.fetchCurrentWeatherData(cityName);
+        },
+        child: Icon(Icons.refresh),
       ),
     );
   }

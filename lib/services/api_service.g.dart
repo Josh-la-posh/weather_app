@@ -13,7 +13,7 @@ class _ApiService implements ApiService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://api.weatherstack.com';
+    baseUrl ??= 'http://api.weatherstack.com';
   }
 
   final Dio _dio;
@@ -24,13 +24,11 @@ class _ApiService implements ApiService {
   Future<WeatherResponse> getCurrentWeather(
     String apiKey,
     String query,
-    String units,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'access_key': apiKey,
       r'query': query,
-      r'units': units,
     };
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
@@ -95,7 +93,7 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<WeatherResponse> getForecast(
+  Future<ForecastResponse> getForecast(
     String apiKey,
     String query,
     String days,
@@ -111,7 +109,7 @@ class _ApiService implements ApiService {
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<WeatherResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<ForecastResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -127,12 +125,12 @@ class _ApiService implements ApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = WeatherResponse.fromJson(_result.data!);
+    final value = ForecastResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<AutocompleteResult> getAutocompleteResults(
+  Future<dynamic> getAutocompleteResults(
     String apiKey,
     String query,
   ) async {
@@ -143,24 +141,23 @@ class _ApiService implements ApiService {
     };
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<AutocompleteResult>(Options(
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              '/autocomplete',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = AutocompleteResult.fromJson(_result.data!);
+        .compose(
+          _dio.options,
+          '/autocomplete',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
     return value;
   }
 

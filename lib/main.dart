@@ -1,19 +1,26 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_app/provider/current_weather_provider.dart';
 import 'package:weather_app/provider/historical_weather_provider.dart';
 import 'package:weather_app/provider/location_autocomplete_provider.dart';
 import 'package:weather_app/provider/temperature_unit.dart';
 import 'package:weather_app/provider/time_series_provider.dart';
-import 'package:weather_app/provider/weather_provider.dart';
+import 'package:weather_app/provider/forecast_provider.dart';
 import 'package:weather_app/screens/home.dart';
 import 'package:weather_app/services/api_service.dart';
 
 void main() {
+  Dio dio = Dio();
+  dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+
   runApp(
     MultiProvider(providers: [
-      ChangeNotifierProvider<WeatherProvider>(
-        create: (context) => WeatherProvider(ApiService(Dio())),
+      ChangeNotifierProvider<CurrentWeatherProvider>(
+        create: (context) => CurrentWeatherProvider(ApiService(Dio())),
+      ),
+      ChangeNotifierProvider<ForecastProvider>(
+        create: (context) => ForecastProvider(ApiService(Dio())),
       ),
       ChangeNotifierProvider<HistoricalWeatherProvider>(
         create: (context) => HistoricalWeatherProvider(ApiService(Dio())),

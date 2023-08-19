@@ -11,12 +11,26 @@ WeatherResponse _$WeatherResponseFromJson(Map<String, dynamic> json) =>
       request: Request.fromJson(json['request'] as Map<String, dynamic>),
       location: Location.fromJson(json['location'] as Map<String, dynamic>),
       current: CurrentWeather.fromJson(json['current'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$WeatherResponseToJson(WeatherResponse instance) =>
+    <String, dynamic>{
+      'request': instance.request,
+      'location': instance.location,
+      'current': instance.current,
+    };
+
+ForecastResponse _$ForecastResponseFromJson(Map<String, dynamic> json) =>
+    ForecastResponse(
+      request: Request.fromJson(json['request'] as Map<String, dynamic>),
+      location: Location.fromJson(json['location'] as Map<String, dynamic>),
+      current: CurrentWeather.fromJson(json['current'] as Map<String, dynamic>),
       forecast: (json['forecast'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(k, ForecastData.fromJson(e as Map<String, dynamic>)),
       ),
     );
 
-Map<String, dynamic> _$WeatherResponseToJson(WeatherResponse instance) =>
+Map<String, dynamic> _$ForecastResponseToJson(ForecastResponse instance) =>
     <String, dynamic>{
       'request': instance.request,
       'location': instance.location,

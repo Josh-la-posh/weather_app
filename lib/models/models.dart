@@ -7,19 +7,37 @@ class WeatherResponse {
   final Request request;
   final Location location;
   final CurrentWeather current;
-  final Map<String, ForecastData> forecast;
 
   WeatherResponse({
+    required this.request,
+    required this.location,
+    required this.current
+});
+
+  factory WeatherResponse.fromJson(Map<String, dynamic> json) =>
+      _$WeatherResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$WeatherResponseToJson(this);
+}
+
+@JsonSerializable()
+class ForecastResponse {
+  final Request request;
+  final Location location;
+  final CurrentWeather current;
+  final Map<String, ForecastData> forecast;
+
+  ForecastResponse({
     required this.request,
     required this.location,
     required this.current,
     required this.forecast,
   });
 
-  factory WeatherResponse.fromJson(Map<String, dynamic> json) =>
-      _$WeatherResponseFromJson(json);
+  factory ForecastResponse.fromJson(Map<String, dynamic> json) =>
+      _$ForecastResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$WeatherResponseToJson(this);
+  Map<String, dynamic> toJson() => _$ForecastResponseToJson(this);
 }
 
 @JsonSerializable()
