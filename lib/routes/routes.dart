@@ -7,7 +7,7 @@ import 'package:weather_app/screens/notification.dart';
 import 'package:weather_app/screens/search.dart';
 
 Map<String, WidgetBuilder> routes = {
-  HOME_SCREEN: (context) => const HomePage(),
+  HOME_SCREEN: (context) => const HomePage(cityName: 'New York'),
   NOTIFICATION_SCREEN: (context) => const NotificationScreen(),
   // FORECAST_SCREEN: (context) => const ForecastScreen(),
   SEARCH_SCREEN: (context) => const SearchPage()

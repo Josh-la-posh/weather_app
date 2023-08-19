@@ -1,5 +1,3 @@
-
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,16 +13,16 @@ void main() {
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider<WeatherProvider>(
-        create: (context) => WeatherProvider(ApiService(dio)),
+        create: (context) => WeatherProvider(ApiService(Dio())),
       ),
       ChangeNotifierProvider<HistoricalWeatherProvider>(
-        create: (context) => HistoricalWeatherProvider(ApiService(dio)),
+        create: (context) => HistoricalWeatherProvider(ApiService(Dio())),
       ),
       ChangeNotifierProvider<HistoricalTimeSeriesProvider>(
-        create: (context) => HistoricalTimeSeriesProvider(ApiService(dio)),
+        create: (context) => HistoricalTimeSeriesProvider(ApiService(Dio())),
       ),
       ChangeNotifierProvider<LocationAutocompleteProvider>(
-        create: (context) => LocationAutocompleteProvider(ApiService(dio)),
+        create: (context) => LocationAutocompleteProvider(ApiService(Dio())),
       ),
       ChangeNotifierProvider<TemperatureUnitProvider>(
         create: (context) => TemperatureUnitProvider(),
@@ -39,14 +37,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        return ChangeNotifierProvider(
-          create: (context) => WeatherProvider(ApiService(Dio())),
-          child: MaterialApp(
+        return MaterialApp(
             title: 'Weather App',
             debugShowCheckedModeBanner: false,
-            home: HomePage(),
-          ),
-        );
-    // );
+            home: HomePage(cityName: 'New York'),
+          );
   }
 }

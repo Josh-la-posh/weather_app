@@ -10,7 +10,7 @@ class WeatherProvider with ChangeNotifier {
   WeatherResponse? _weatherData;
   WeatherResponse? get weatherData => _weatherData;
 
-  Future<void> fetWeatherData(String locationQuery, String units) async {
+  Future<void> fetchWeatherData(String locationQuery, String units) async {
     try {
       _weatherData = await _apiService.getCurrentWeather('4c55438c954a5b915cdd3507b1ee307e', locationQuery, units);
       notifyListeners();
