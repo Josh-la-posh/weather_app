@@ -1,12 +1,13 @@
-import 'dart:collection';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_app/assets/icons/svg.dart';
+import 'package:weather_app/models/models.dart';
+import 'package:weather_app/provider/weather_provider.dart';
 import 'package:weather_app/screens/forecast.dart';
 import 'package:weather_app/screens/notification.dart';
 import 'package:weather_app/screens/search.dart';
-import 'package:weather_app/services/weather_api_service.dart';
+import 'package:weather_app/services/api_service.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -20,32 +21,16 @@ class HomePage extends StatefulWidget {
 }
 
 final dio = Dio();
-final apiService = WeatherApiService(dio);
+final apiService = ApiService(dio);
 
 class _HomePageState extends State<HomePage> {
 
   String query = 'New York';
   String apiKey = '4c55438c954a5b915cdd3507b1ee307e';
-  WeatherDataResponse? weather;
+  WeatherResponse? weather;
   String temperatureUnit = "C";
   bool showHistoricalData = false;
 
-  @override
-  void initState(){
-    super.initState();
-    fetchWeather();
-  }
-
-  Future<void> fetchWeather() async {
-    try {
-      final response = await apiService.getWeather(apiKey, query);
-      setState(() {
-        weather = response;
-      });
-    } catch (e) {
-      print("Error fetching weather data: $e");
-    }
-  }
 
   void toggleTemperatureUnit() {
     setState(() {
@@ -56,6 +41,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final weatherProvider = Provider.of<WeatherProvider>(context);
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -94,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           MapWhiteIcon(),
                           SizedBox(width: 13.98,),
-                          Text('${weather?.location.name}', style: TextStyle(
+                          Text('${weatherProvider.weatherData?.location.name}', style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Overpass',
                             fontWeight: FontWeight.w700,
@@ -116,11 +102,11 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SizedBox(height: 46.15,),
                 // CloudHomeIcon(),
-                Image.network(weather!.current.weather_icons[0]),
+                Image.network(weatherProvider.weatherData!.current.weather_icons[0]),
                 SizedBox(height: 77.18,),
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ForecastScreen()));
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => const ForecastScreen()));
                   },
                   child: Container(
                     width: double.infinity,
@@ -136,14 +122,14 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.only(top: 11.89, bottom: 18.18),
                       child: Column(
                         children: [
-                          Text('${weather?.location.localtime}', style: TextStyle(
+                          Text('${weatherProvider.weatherData?.location.localtime}', style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'Overpass',
                               fontWeight: FontWeight.w400,
                               fontStyle: FontStyle.normal,
                               fontSize: 12.585
                           ),),
-                          Text('${weather?.current.temperature.toString()} °C', style: TextStyle(
+                          Text('${weatherProvider.weatherData?.current.temperature.toString()} °C', style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'Overpass',
                               fontWeight: FontWeight.w400,
@@ -186,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                                       fontSize: 12.585
                                   ),),
                                   SizedBox(width: 13.98,),
-                                  Text('${weather?.current.wind_speed} km/h', style: TextStyle(
+                                  Text('${weatherProvider.weatherData?.current.wind_speed} km/h', style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Overpass',
                                       fontWeight: FontWeight.w400,
@@ -225,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                                       fontSize: 12.585
                                   ),),
                                   const SizedBox(width: 13.98,),
-                                  Text('${weather!.current.humidity}%', style: TextStyle(
+                                  Text('${weatherProvider.weatherData!.current.humidity}%', style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Overpass',
                                       fontWeight: FontWeight.w400,

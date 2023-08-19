@@ -9,7 +9,7 @@ import 'package:weather_app/screens/search.dart';
 Map<String, WidgetBuilder> routes = {
   HOME_SCREEN: (context) => const HomePage(),
   NOTIFICATION_SCREEN: (context) => const NotificationScreen(),
-  FORECAST_SCREEN: (context) => const ForecastScreen(),
+  // FORECAST_SCREEN: (context) => const ForecastScreen(),
   SEARCH_SCREEN: (context) => const SearchPage()
 
 };
